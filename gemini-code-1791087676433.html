@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Source Directory — Star Nootropics</title>
+  <meta name="description" content="Master taxonomy and source directory for the Star Nootropics empirical literature archives.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/vanguard.css">
+  <style>
+    .domain-header { font-family: 'Source Serif 4', serif; font-size: 1.5rem; color: var(--text-main); border-bottom: 2px solid var(--border); padding-bottom: 0.25rem; margin: 3rem 0 1.25rem; }
+    .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1.25rem; }
+    .category-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem; box-shadow: var(--shadow-md); text-decoration: none; display: block; }
+    .cat-num { font-size: 0.72rem; font-weight: 700; color: var(--accent); display: block; }
+    .cat-title { font-family: 'Source Serif 4', serif; font-size: 1.15rem; color: var(--text-main); margin: 0.25rem 0; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-inner">
+      <a href="index.html" class="brand-logo">✦ StarNootropics<span>/research</span></a>
+      <nav class="nav-links">
+        <a href="directory.html" aria-current="page">Directory</a>
+        <a href="library.html">Reference Library</a>
+        <!-- Outbound link to Prometheus Rising -->
+        <a href="https://shasta-fox.github.io/prometheus-rising/" target="_blank" rel="noopener noreferrer">Prometheus Rising ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <header class="hero-wrap">
+      <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--accent);">Master Taxonomy</span>
+      <h1>Source Directory</h1>
+    </header>
+
+    <input type="search" id="directorySearch" class="search-input" aria-label="Filter directory categories" placeholder="Filter categories or press '/' to search...">
+
+    <h2 class="domain-header">Domain IV: Interdisciplinary Archive</h2>
+    <div class="category-grid">
+      <a href="library.html#cat-17" class="category-card" data-title="Addiction &amp; Substance Use">
+        <span class="cat-num">17</span><h3 class="cat-title">Addiction &amp; Substance Use</h3>
+      </a>
+      <a href="library.html#cat-18" class="category-card" data-title="Psychotherapy &amp; Clinical Psychology">
+        <span class="cat-num">18</span><h3 class="cat-title">Psychotherapy &amp; Clinical Psychology</h3>
+      </a>
+      <a href="library.html#cat-19" class="category-card" data-title="Health, Neurobiology &amp; Nutrition">
+        <span class="cat-num">19</span><h3 class="cat-title">Health, Neurobiology &amp; Nutrition</h3>
+      </a>
+      <a href="library.html#cat-20" class="category-card" data-title="Lifestyle &amp; Personal Development">
+        <span class="cat-num">20</span><h3 class="cat-title">Lifestyle &amp; Personal Development</h3>
+      </a>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('directorySearch');
+      const cards = document.querySelectorAll('.category-card');
+
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        cards.forEach(card => {
+          const title = card.getAttribute('data-title').toLowerCase();
+          card.classList.toggle('hidden', query && !title.includes(query));
+        });
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === '/' && document.activeElement !== searchInput) {
+          e.preventDefault(); searchInput.focus();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

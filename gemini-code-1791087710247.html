@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reference Library — Star Nootropics</title>
+  <meta name="description" content="Searchable reference library for empirical literature and clinical archives.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/vanguard.css">
+  <style>
+    .letter-heading { font-family: 'Source Serif 4', serif; font-size: 1.75rem; color: var(--text-main); border-bottom: 2px solid var(--border); padding-bottom: 0.25rem; margin: 2.5rem 0 1.25rem; }
+    .apa-entry { padding-left: 2rem; text-indent: -2rem; margin-bottom: 1.25rem; font-size: 0.95rem; }
+    .apa-entry em { font-style: italic; }
+    .cite-copy-btn { display: inline-block; margin-left: 0.5rem; font-size: 0.7rem; font-weight: 600; color: var(--text-muted); background: var(--bg-surface-sunken); border: 1px solid var(--border); border-radius: 4px; padding: 0.15rem 0.45rem; cursor: pointer; text-indent: 0; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-inner">
+      <a href="index.html" class="brand-logo">✦ StarNootropics<span>/research</span></a>
+      <nav class="nav-links">
+        <a href="directory.html">Directory</a>
+        <a href="library.html" aria-current="page">Reference Library</a>
+        <!-- Outbound link to Prometheus Rising -->
+        <a href="https://shasta-fox.github.io/prometheus-rising/" target="_blank" rel="noopener noreferrer">Prometheus Rising ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <header class="hero-wrap">
+      <h1>Reference Library</h1>
+    </header>
+
+    <input type="search" id="biblioSearchInput" class="search-input" aria-label="Search reference library" placeholder="Search authors, titles, or press '/' to focus...">
+
+    <div id="biblioList">
+      <h2 class="letter-heading" id="letter-A">A</h2>
+      <p class="apa-entry" data-letter="A">Absolon, K. E. (Minogiizhigokwe). (2011). <em>Kaandossiwin: How we come to know</em>. Fernwood Publishing.</p>
+      <p class="apa-entry" data-letter="A">Anderson, C. (2003, June 1). The bad news isn't in: A look at dissociative-induced brain damage and cognitive impairment. <em>Erowid</em>.</p>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('biblioSearchInput');
+      const entries = document.querySelectorAll('.apa-entry');
+      const headings = document.querySelectorAll('.letter-heading');
+
+      entries.forEach(entry => {
+        const citation = entry.textContent.trim();
+        entry.dataset.search = citation.toLowerCase();
+
+        const btn = document.createElement('button');
+        btn.className = 'cite-copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', () => {
+          const done = () => {
+            btn.textContent = 'Copied! ✓';
+            setTimeout(() => btn.textContent = 'Copy', 1500);
+          };
+          navigator.clipboard.writeText(citation).then(done, () => {
+            btn.textContent = 'Copy failed';
+            setTimeout(() => btn.textContent = 'Copy', 1500);
+          });
+        });
+        entry.appendChild(btn);
+      });
+
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        entries.forEach(entry => {
+          entry.classList.toggle('hidden', query && !entry.dataset.search.includes(query));
+        });
+        headings.forEach(heading => {
+          const letter = heading.id.replace('letter-', '');
+          const visible = document.querySelectorAll(`.apa-entry[data-letter="${letter}"]:not(.hidden)`);
+          heading.classList.toggle('hidden', query && visible.length === 0);
+        });
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === '/' && document.activeElement !== searchInput) {
+          e.preventDefault(); searchInput.focus();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

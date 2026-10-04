@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monograph Template — Star Nootropics</title>
+  <meta name="description" content="Clinical monograph template for empirical literature and pharmacological archives.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/vanguard.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-inner">
+      <a href="index.html" class="brand-logo">✦ StarNootropics<span>/research</span></a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="directory.html">Directory</a>
+        <a href="library.html">Reference Library</a>
+        <!-- Outbound link to Prometheus Rising -->
+        <a href="https://shasta-fox.github.io/prometheus-rising/" target="_blank" rel="noopener noreferrer">Prometheus Rising ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <header class="hero-wrap">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <span style="font-weight: 700; color: var(--accent); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em;">[Pharmacological Class]</span>
+        <span class="badge" style="background: var(--accent-soft); color: var(--accent);">Tier [H1/H2/H3]</span>
+      </div>
+      <h1 style="font-size: 3.2rem; margin-bottom: 0.5rem; letter-spacing: -0.02em;">[Compound Name]</h1>
+      <div style="font-size: 1.05rem; color: var(--text-muted); margin-bottom: 1.5rem;"><strong>Synonyms:</strong> [Chemical Name], [Development Code]</div>
+      <p style="font-size: 1.15rem; color: var(--text-body); max-width: 65ch;">[Provide a one-sentence concrete summary identifying the compound's origin, primary mechanism, and clinically verified outcomes.]</p>
+    </header>
+
+    <div class="clinical-grid">
+      <div class="clinical-card">
+        <h2>Target &amp; Mechanism</h2>
+        <div class="data-row"><span class="data-label">Primary Target</span><span class="data-value">[e.g., μ-Opioid Receptor]</span></div>
+        <div class="data-row"><span class="data-label">Action</span><span class="data-value">[e.g., Full Agonist]</span></div>
+        <div class="data-row"><span class="data-label">Barrier Penetration</span><span class="data-value">[e.g., High]</span></div>
+      </div>
+
+      <div class="clinical-card" style="border-left-color: var(--success);">
+        <h2 style="color: var(--success);">Pharmacokinetics</h2>
+        <div class="data-row"><span class="data-label">Onset</span><span class="data-value">[e.g., 30–60 mins]</span></div>
+        <div class="data-row"><span class="data-label">Elimination Half-Life</span><span class="data-value">[e.g., 24–36 hours]</span></div>
+        <div class="data-row"><span class="data-label">Analgesic Duration</span><span class="data-value">[e.g., 6–8 hours]</span></div>
+      </div>
+
+      <div class="clinical-card" style="border-left-color: #dc2626; grid-column: 1 / -1;">
+        <h2 style="color: #dc2626;">Critical Harm Reduction Pearls</h2>
+        <ul style="margin: 0; padding-left: 1.25rem; font-size: 1rem; color: var(--text-body);">
+          <li style="margin-bottom: 0.5rem;">[Identify specific physiological mismatches, e.g., the gap between withdrawal suppression and pain relief].</li>
+          <li>[Identify contraindications explicitly].</li>
+        </ul>
+      </div>
+    </div>
+
+    <article style="max-width: 75ch; margin-top: 4rem;">
+      <section style="margin-bottom: 4rem;">
+        <h2 style="font-size: 1.8rem; border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">1. Pharmacodynamics &amp; Mechanism of Action</h2>
+
+        <div class="epistemic-warn">
+          <strong>Epistemic Boundary</strong>
+          <p style="margin: 0; font-size: 0.95rem; color: var(--text-body);">Establish the biochemical mechanism strictly using empirical measurements (e.g., receptor binding affinities, enzyme inhibition assays). Do not infer human cognitive or psychological changes directly from cellular binding data.</p>
+        </div>
+
+        <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">[Detail the exact cellular and systemic action. Use active verbs (e.g., "The compound binds").]</p>
+      </section>
+    </article>
+  </main>
+</body>
+</html>
