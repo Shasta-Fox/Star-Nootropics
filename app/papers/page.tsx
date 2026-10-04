@@ -1,0 +1,2 @@
+import {PaperCatalog} from "@/components/PaperCatalog";
+export const metadata={title:"Selected Papers"};export default function Page(){return <><header className="intro"><span className="eyebrow">Monograph & Review Archive · Shasta Fox</span><h1>Selected Papers in Brain Function & Systems Biology</h1><p>Explore reviews and proposed papers on nutrition, pharmacology, and relational systems. Forthcoming entries do not yet have a full paper. Citation verification and peer review status vary.</p><a href="/journal">View all Journal essays →</a></header><PaperCatalog/></>}

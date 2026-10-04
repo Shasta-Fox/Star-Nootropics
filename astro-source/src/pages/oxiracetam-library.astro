@@ -1,0 +1,509 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+interface LiteratureEntry {
+  id: string;
+  type: 'article' | 'review' | 'trial' | 'book';
+  citation: string;
+  title: string;
+  authors: string;
+  year: number;
+  journalOrPublisher: string;
+  doi?: string;
+  directUrl?: string;
+  pmid?: string;
+  buyQuery?: string; // Triggers Amazon & Bookshop links when present
+  annotation?: string;
+}
+
+const oxiracetamArchive: LiteratureEntry[] = [
+  {
+    "id": "ali-2026",
+    "type": "review",
+    "authors": "Ali, H., Maliha, S., Ishtiaq, S., Al-Karawi, O., et al.",
+    "year": 2026,
+    "title": "Therapeutic potential of oxiracetam in neurocognitive disorders: A narrative review",
+    "journalOrPublisher": "Brain and Behavior",
+    "citation": "Ali, H., Maliha, S., Ishtiaq, S., Al-Karawi, O., & Amin, M. H. J. (2026). Therapeutic potential of oxiracetam in neurocognitive disorders: A narrative review. Brain and Behavior, e71727.",
+    "directUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13527391/",
+    "annotation": "Narrative review of proposed mechanisms and clinical and preclinical evidence; not a systematic meta-analysis.",
+    "doi": "10.1002/brb3.71727"
+  },
+  {
+    "id": "guo-2026",
+    "type": "article",
+    "authors": "Guo, S., Li, T., Hu, L., Yang, N., Xiang, S., Wang, J., et al.",
+    "year": 2026,
+    "title": "Oxiracetam improves cognitive disorder in AD by modulating AMPAR subunits GluA1/GluA2 kinetics",
+    "journalOrPublisher": "Cell Biochemistry and Biophysics",
+    "citation": "Guo, S., Li, T., Hu, L., Yang, N., Xiang, S., Wang, J., et al. (2026). Oxiracetam improves cognitive disorder in AD by modulating AMPAR subunits GluA1/GluA2 kinetics. Cell Biochemistry and Biophysics, 84(2), 1597–1623.",
+    "doi": "10.1007/s12013-026-02025-z",
+    "pmid": "41739317",
+    "annotation": "APP/PS1 mouse model investigating hippocampal AMPA receptor subunits. Animal results do not demonstrate benefit in people."
+  },
+  {
+    "id": "wang-2025",
+    "type": "article",
+    "authors": "Wang, L., Guo, H., Zhao, W., Wang, J., & Cao, X.",
+    "year": 2025,
+    "title": "Oxiracetam ameliorates neurological function after traumatic brain injury through competing endogenous RNA regulatory network",
+    "journalOrPublisher": "Psychopharmacology",
+    "citation": "Wang, L., Guo, H., Zhao, W., Wang, J., & Cao, X. (2025). Oxiracetam ameliorates neurological function after traumatic brain injury through competing endogenous RNA regulatory network. Psychopharmacology, 242(10), 2275–2291.",
+    "doi": "10.1007/s00213-025-06797-9",
+    "pmid": "40272502",
+    "annotation": "Rat traumatic brain injury model with exploratory analysis of competing endogenous RNA networks."
+  },
+  {
+    "id": "lim-2023",
+    "type": "trial",
+    "authors": "Lim, J. S., Lee, J., Kang, Y., Park, H. T., Kim, D. E., Cha, J. K., et al.",
+    "year": 2023,
+    "title": "Efficacy and safety of oxiracetam in patients with vascular cognitive impairment: A multicenter, randomized, double-blinded, placebo-controlled, phase IV clinical trial",
+    "journalOrPublisher": "Contemporary Trial Protocols",
+    "citation": "Lim, J. S., Lee, J., Kang, Y., Park, H. T., Kim, D. E., Cha, J. K., et al. (2023). Efficacy and safety of oxiracetam in patients with vascular cognitive impairment: A multicenter, randomized, double-blinded, placebo-controlled, phase IV clinical trial. Contemporary Trial Protocols, 126, Article 107108.",
+    "doi": "10.1016/j.cct.2023.107108",
+    "pmid": "36724841",
+    "annotation": "Clinical trial protocol; describes study design and does not report efficacy outcomes. See the completed 2026 trial linked from the monograph."
+  },
+  {
+    "id": "li-2017",
+    "type": "article",
+    "authors": "Li, W., Liu, H., Jiang, H., Wang, C., Guo, Y., Sun, Y., Zhao, X., et al.",
+    "year": 2017,
+    "title": "(S)-Oxiracetam is the active ingredient in oxiracetam that alleviates the cognitive impairment induced by chronic cerebral hypoperfusion in rats",
+    "journalOrPublisher": "Scientific Reports",
+    "citation": "Li, W., Liu, H., Jiang, H., Wang, C., Guo, Y., Sun, Y., Zhao, X., et al. (2017). (S)-Oxiracetam is the active ingredient in oxiracetam that alleviates the cognitive impairment induced by chronic cerebral hypoperfusion in rats. Scientific Reports, 7, Article 10052.",
+    "doi": "10.1038/s41598-017-10283-4",
+    "annotation": "Rat hypoperfusion study comparing enantiomers. The findings cannot establish effects in humans."
+  },
+  {
+    "id": "gouliaev-1994",
+    "type": "review",
+    "authors": "Gouliaev, A. H., & Senning, A.",
+    "year": 1994,
+    "title": "Piracetam and other structurally related nootropics",
+    "journalOrPublisher": "Brain Research Reviews",
+    "citation": "Gouliaev, A. H., & Senning, A. (1994). Piracetam and other structurally related nootropics. Brain Research Reviews, 19(2), 180–222.",
+    "doi": "10.1016/0165-0173(94)90011-6",
+    "annotation": "Foundational medicinal chemistry review comparing the pharmacokinetics, receptor affinities, and structure-activity relationships (SAR) of 2-pyrrolidone derivatives."
+  },
+  {
+    "id": "mondadori-1994",
+    "type": "review",
+    "authors": "Mondadori, C.",
+    "year": 1994,
+    "title": "In search of the mechanism of action of the nootropics: New insights and potential clinical implications",
+    "journalOrPublisher": "Life Sciences",
+    "citation": "Mondadori, C. (1994). In search of the mechanism of action of the nootropics: New insights and potential clinical implications. Life Sciences, 55(25–26), 2171–2178.",
+    "doi": "10.1016/0024-3205(94)00398-X",
+    "annotation": "Mechanistic review of piracetam-like nootropics and proposed implications for memory research."
+  },
+  {
+    "id": "sansone-1991",
+    "type": "article",
+    "authors": "Sansone, M., Castellano, C., Battaglia, M., & Ammassari-Teule, M.",
+    "year": 1991,
+    "title": "Effects of oxiracetam-nicotine combinations on active and passive avoidance learning in mice",
+    "journalOrPublisher": "Pharmacology Biochemistry and Behavior",
+    "citation": "Sansone, M., Castellano, C., Battaglia, M., & Ammassari-Teule, M. (1991). Effects of oxiracetam-nicotine combinations on active and passive avoidance learning in mice. Pharmacology Biochemistry and Behavior, 39(1), 197–200.",
+    "doi": "10.1016/0091-3057(91)90421-W",
+    "annotation": "Mouse avoidance-learning experiments did not support nicotinic activation as the main oxiracetam mechanism in those tasks."
+  },
+  {
+    "id": "marchi-1990",
+    "type": "article",
+    "authors": "Marchi, M., Besana, E., & Raiteri, M.",
+    "year": 1990,
+    "title": "Oxiracetam increases the release of endogenous glutamate from depolarized rat hippocampal slices",
+    "journalOrPublisher": "European Journal of Pharmacology",
+    "citation": "Marchi, M., Besana, E., & Raiteri, M. (1990). Oxiracetam increases the release of endogenous glutamate from depolarized rat hippocampal slices. European Journal of Pharmacology, 185(2–3), 247–249.",
+    "doi": "10.1016/0014-2999(90)90650-U",
+    "annotation": "In-vitro rat hippocampal-slice study of endogenous glutamate release."
+  },
+  {
+    "id": "mondadori-1990",
+    "type": "article",
+    "authors": "Mondadori, C., Bhatnagar, A., Borkowski, J., & Häusler, A.",
+    "year": 1990,
+    "title": "Involvement of a steroidal component in the mechanism of action of piracetam-like nootropics",
+    "journalOrPublisher": "Brain Research",
+    "citation": "Mondadori, C., Bhatnagar, A., Borkowski, J., & Häusler, A. (1990). Involvement of a steroidal component in the mechanism of action of piracetam-like nootropics. Brain Research, 506(1), 101–108.",
+    "doi": "10.1016/0006-8993(90)91204-T",
+    "annotation": "Preclinical experiments examining possible steroid involvement in piracetam-like drug effects."
+  }
+];
+---
+
+<Layout title="Oxiracetam Research Dossier & Bibliography | Star Research Institute">
+  <div class="archive-header">
+    <div class="archive-meta-strip">
+      <span>Dossier Reference: SR-OX-2026</span>
+      <span>Classification: Investigational Nootropic / AMPA Modulator</span>
+      <span>Standards: APA 7th Edition</span>
+    </div>
+    <h1 class="archive-title">Oxiracetam (ISF-2522) Scholarly Literature Archive</h1>
+    <p class="archive-lead">
+      A selected literature archive covering reviews, a clinical trial protocol, and preclinical research. Citation identifiers were checked on September 28, 2026; this collection is not a systematic review.
+    </p>
+  </div>
+
+  <!-- INSTITUTIONAL FILTER BAR -->
+  <div class="filter-mast">
+    <div class="filter-tabs">
+      <button class="tab-btn active" data-filter="all">All Literature ({oxiracetamArchive.length})</button>
+      <button class="tab-btn" data-filter="trial">Trial Protocols</button>
+      <button class="tab-btn" data-filter="review">Reviews</button>
+      <button class="tab-btn" data-filter="article">Preclinical & In Vitro</button>
+      <button class="tab-btn" data-filter="book">Monographs & Books</button>
+    </div>
+    <div class="search-wrap">
+      <input 
+        type="search" 
+        id="archive-search" 
+        placeholder="Filter by author, pathway, or keyword..." 
+        aria-label="Filter references"
+      />
+    </div>
+  </div>
+
+  <!-- BIBLIOGRAPHY REPOSITORY -->
+  <section class="bibliography-shelf" id="shelf">
+    {oxiracetamArchive.map((item) => (
+      <article class="entry-node" data-type={item.type}>
+        <div class="node-meta">
+          <span class={`type-tag tag-${item.type}`}>
+            {item.type === 'trial' ? 'Clinical Trial Protocol' : item.type === 'review' ? 'Review' : item.type === 'book' ? 'Volume / Monograph' : 'Preclinical Research'}
+          </span>
+          <span class="year-stamp">{item.year}</span>
+          <span class="journal-stamp">{item.journalOrPublisher}</span>
+        </div>
+
+        <p class="apa-citation">
+          {item.citation}
+        </p>
+
+        {item.annotation && (
+          <p class="annotation-text">
+            <strong>Key Finding:</strong> {item.annotation}
+          </p>
+        )}
+
+        <div class="node-actions">
+          {/* DOI Direct Resolution */}
+          {item.doi && (
+            <a 
+              href={`https://doi.org/${item.doi}`} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="action-link doi-link"
+            >
+              DOI: {item.doi} &rarr;
+            </a>
+          )}
+
+          {/* Direct Repository Link */}
+          {item.directUrl && (
+            <a 
+              href={item.directUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="action-link web-link"
+            >
+              Full Text (Open Access) &rarr;
+            </a>
+          )}
+
+          {/* PubMed Accession */}
+          {item.pmid && (
+            <a 
+              href={`https://pubmed.ncbi.nlm.nih.gov/${item.pmid}/`} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="action-link pubmed-link"
+            >
+              PubMed: {item.pmid}
+            </a>
+          )}
+
+          {/* Book Purchase Outlinks (Triggers automatically if entry has a buyQuery or is a book) */}
+          {item.buyQuery && (
+            <div class="book-purchase-cluster">
+              <a 
+                href={`https://www.amazon.com/s?k=${encodeURIComponent(item.buyQuery)}`} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="action-link buy-amazon"
+              >
+                Amazon Books &rarr;
+              </a>
+              <a 
+                href={`https://bookshop.org/beta/search?keywords=${encodeURIComponent(item.buyQuery)}`} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="action-link buy-bookshop"
+              >
+                Bookshop.org (Independent) &rarr;
+              </a>
+            </div>
+          )}
+        </div>
+      </article>
+    ))}
+  </section>
+</Layout>
+
+<style>
+  .archive-header {
+    border-bottom: 2px solid var(--oxford-navy, #0f172a);
+    padding-bottom: 1.75rem;
+    margin-bottom: 2rem;
+  }
+  .archive-meta-strip {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: var(--ink-muted, #64748b);
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .archive-title {
+    font-family: var(--font-serif, serif);
+    font-size: 2.2rem;
+    line-height: 1.2;
+    color: var(--oxford-navy, #091e3a);
+    margin-bottom: 0.75rem;
+  }
+  .archive-lead {
+    font-family: var(--font-serif, serif);
+    font-size: 1.1rem;
+    color: var(--ink-secondary, #334155);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Academic Filter Bar */
+  .filter-mast {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--hairline-dark, #cbd5e1);
+    padding-bottom: 0.75rem;
+    margin-bottom: 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .filter-tabs {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: transparent;
+    border: none;
+    font-family: var(--font-sans, sans-serif);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink-muted, #64748b);
+    padding: 0.4rem 0.75rem;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.15s ease;
+  }
+  .tab-btn:hover {
+    color: var(--oxford-navy, #091e3a);
+    background: #f1f5f9;
+  }
+  .tab-btn.active {
+    color: #ffffff;
+    background: var(--oxford-navy, #091e3a);
+  }
+  #archive-search {
+    border: 1px solid var(--hairline-dark, #cbd5e1);
+    background: #ffffff;
+    font-family: var(--font-sans, sans-serif);
+    font-size: 0.82rem;
+    padding: 0.4rem 0.75rem;
+    width: 280px;
+    border-radius: 2px;
+    outline: none;
+  }
+  #archive-search:focus {
+    border-color: var(--oxford-navy, #091e3a);
+  }
+
+  /* Scholarly Nodes */
+  .bibliography-shelf {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .entry-node {
+    border: 1px solid var(--hairline, #e2e8f0);
+    border-left: 3px solid var(--oxford-navy, #091e3a);
+    background: #ffffff;
+    padding: 1.5rem 1.75rem;
+    transition: box-shadow 0.15s ease;
+  }
+  .entry-node:hover {
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+  }
+  .node-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .type-tag {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.15rem 0.45rem;
+    border-radius: 2px;
+    font-size: 0.68rem;
+    font-weight: 700;
+  }
+  .tag-trial {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+  }
+  .tag-review {
+    background: #eff6ff;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+  }
+  .tag-article {
+    background: #f8fafc;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+  }
+  .tag-book {
+    background: #fffbeb;
+    color: #92400e;
+    border: 1px solid #fde68a;
+  }
+  .year-stamp {
+    color: var(--ink-primary, #0f172a);
+    font-weight: 700;
+  }
+  .journal-stamp {
+    color: var(--ink-muted, #64748b);
+    font-style: italic;
+  }
+  .apa-citation {
+    font-family: var(--font-serif, serif);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--ink-primary, #0f172a);
+    margin-bottom: 0.6rem;
+  }
+  .annotation-text {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 0.86rem;
+    line-height: 1.5;
+    color: var(--ink-secondary, #334155);
+    background: #f8fafc;
+    border-left: 2px solid #cbd5e1;
+    padding: 0.5rem 0.75rem;
+    margin: 0.6rem 0 1rem 0;
+  }
+  .node-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    margin-top: 0.85rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid #f1f5f9;
+  }
+  .action-link {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 2px;
+    transition: all 0.15s ease;
+  }
+  .doi-link {
+    background: #f8fafc;
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+  }
+  .doi-link:hover {
+    background: #e2e8f0;
+  }
+  .web-link {
+    background: #0f172a;
+    color: #ffffff;
+  }
+  .web-link:hover {
+    background: #1e293b;
+  }
+  .pubmed-link {
+    background: #f1f5f9;
+    color: #0369a1;
+    border: 1px solid #bae6fd;
+  }
+  .pubmed-link:hover {
+    background: #e0f2fe;
+  }
+  .book-purchase-cluster {
+    display: inline-flex;
+    gap: 0.5rem;
+  }
+  .buy-amazon {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+  }
+  .buy-amazon:hover {
+    background: #fde68a;
+  }
+  .buy-bookshop {
+    background: #f1f5f9;
+    color: #334155;
+    border: 1px solid #cbd5e1;
+  }
+  .buy-bookshop:hover {
+    background: #e2e8f0;
+  }
+</style>
+
+<script>
+  // Instant client-side research filtering
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+  const search = document.getElementById('archive-search') as HTMLInputElement;
+  const nodes = document.querySelectorAll<HTMLElement>('.entry-node');
+
+  let activeType = 'all';
+  let filterText = '';
+
+  function filterLibrary() {
+    nodes.forEach((node) => {
+      const type = node.dataset.type;
+      const text = node.textContent?.toLowerCase() || '';
+      const matchesType = activeType === 'all' || type === activeType;
+      const matchesSearch = text.includes(filterText);
+
+      node.style.display = (matchesType && matchesSearch) ? 'block' : 'none';
+    });
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => t.classList.remove('active'));
+      tab.classList.add('active');
+      activeType = tab.dataset.filter || 'all';
+      filterLibrary();
+    });
+  });
+
+  search?.addEventListener('input', (e) => {
+    filterText = (e.target as HTMLInputElement).value.toLowerCase().trim();
+    filterLibrary();
+  });
+</script>

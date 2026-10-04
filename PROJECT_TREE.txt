@@ -1,0 +1,28 @@
+star-nootropics-research/
+├── app/
+│   ├── page.tsx
+│   ├── globals.css
+│   ├── layout.tsx
+│   ├── research/page.tsx
+│   ├── research/[slug]/page.tsx
+│   ├── policy/page.tsx
+│   ├── shop/page.tsx
+│   ├── archive/page.tsx
+│   └── monograph-template/page.tsx
+├── components/
+│   ├── StarLogo.tsx
+│   ├── ResearchBanner.tsx
+│   ├── EvidenceBadge.tsx
+│   └── MonographView.tsx
+├── data/
+│   ├── types.ts
+│   ├── content.ts
+│   ├── legalPolicy.ts
+│   ├── template.ts
+│   └── monographs.ts
+├── LEGAL_EDITORIAL_POLICY.md
+├── MONOGRAPH_TEMPLATE.md
+├── PROJECT_TREE.txt
+├── README.md
+├── package.json
+└── tsconfig.json

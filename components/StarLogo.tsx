@@ -1,0 +1,1 @@
+export function StarLogo(){return <a className="wordmark" href="/" aria-label="Star Nootropics home"><img src="/star-12.svg" width="44" height="44" alt="" aria-hidden="true"/><span>StarNootropics<span className="brandSection">/research</span></span></a>}
