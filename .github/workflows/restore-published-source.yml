@@ -1,0 +1,40 @@
+name: Restore published source
+on:
+  push:
+    paths:
+      - '.github/workflows/restore-published-source.yml'
+permissions:
+  contents: write
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore verified published design
+        shell: python
+        run: |
+          from pathlib import Path
+          import hashlib, zipfile
+          archive = Path('starnootropics-research-github.zip')
+          assert hashlib.sha256(archive.read_bytes()).hexdigest() == '5bd985107582f194a41bd3e581a89788ef89542d56741f976fd5f2fc57aa297e'
+          with zipfile.ZipFile(archive) as z:
+              for item in z.infolist():
+                  parts = Path(item.filename).parts
+                  assert parts[0] == 'starnootropics-research' and '..' not in parts
+                  target = Path(*parts[1:])
+                  assert not target.is_absolute() and parts[1] != '.git'
+                  if item.is_dir():
+                      continue
+                  if target.exists():
+                      assert target.read_bytes() == z.read(item), f'Refusing to overwrite {target}'
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  target.write_bytes(z.read(item))
+      - name: Commit original source files
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .
+          if ! git diff --cached --quiet; then
+            git commit -m 'Restore exact published Star Nootropics source (version 32)'
+            git push
+          fi
